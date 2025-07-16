@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single-File API Tester</title>
+
+    <!-- ================================================================= -->
+    <!-- CSS Styles are embedded directly into the HTML head               -->
+    <!-- ================================================================= -->
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #1a253c;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #a9a9a9;
+            cursor: not-allowed;
+        }
+
+        .response-area {
+            margin-top: 30px;
+        }
+
+        h2 {
+            color: #1a253c;
+        }
+
+        pre {
+            background-color: #eef2f5;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #d1d9e0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            min-height: 50px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================================================= -->
+    <!-- HTML Content (The user interface)                                 -->
+    <!-- ================================================================= -->
+    <main class="container">
+        <h1>Custom API Endpoint Tester</h1>
+        <p>This form sends a request to your own backend API, which then calls the external chat API. The entire frontend is in this single file!</p>
+        
+        <form id="chat-form">
+            <label for="prompt-input">Enter your prompt:</label>
+            <textarea id="prompt-input" rows="4" placeholder="e.g., Explain the concept of a single-page application." required></textarea>
+            <button type="submit" id="submit-button">
+                <span class="button-text">Send Request</span>
+            </button>
+        </form>
+
+        <div class="response-area">
+            <h2>API Response:</h2>
+            <pre id="response-output">Awaiting your request...</pre>
+        </div>
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- JavaScript Logic is embedded just before the closing body tag     -->
+    <!-- ================================================================= -->
+    <script>
+        // We wrap the code in an event listener to ensure all HTML elements are loaded before the script runs.
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('chat-form');
+            const promptInput = document.getElementById('prompt-input');
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.querySelector('.button-text');
+            const responseOutput = document.getElementById('response-output');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent the form from reloading the page
+
+                const prompt = promptInput.value.trim();
+                if (!prompt) {
+                    responseOutput.textContent = 'Please enter a prompt.';
+                    return;
+                }
+
+                // UI Feedback: Show loading state
+                submitButton.disabled = true;
+                buttonText.textContent = 'Loading...';
+                responseOutput.textContent = 'Sending request to your API...';
+
+                try {
+                    // The fetch call remains the same. The relative URL '/api/chat' works
+                    // because this HTML file is served by the same server hosting the API.
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ prompt: prompt }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    // Display the successful response, formatted nicely as a JSON string
+                    responseOutput.textContent = JSON.stringify(data, null, 2);
+
+                } catch (error) {
+                    responseOutput.textContent = `Error: ${error.message}`;
+                    console.error('Fetch error:', error);
+                } finally {
+                    // UI Feedback: Reset the button
+                    submitButton.disabled = false;
+                    buttonText.textContent = 'Send Request';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
