@@ -1,18 +1,26 @@
 {
-  "name": "backend",
+  "name": "LADYBUG",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "description": "LADYBUG WhatsApp Pair Code Generator",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo 'No build step required'"
+  },
+  "author": "Ntando-Tech",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "@whiskeysockets/baileys": "6.7.17",
+    "qrcode": "^1.5.4",
+    "awesome-phonenumber": "7.2.0",
+    "pino": "9.5.0",
+    "phone": "3.1.55",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "path": "^0.12.7"
   }
 }
