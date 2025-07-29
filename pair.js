@@ -76,7 +76,15 @@ router.get('/', async (req, res) => {
 
                     // Send welcome message
                     await KnightBot.sendMessage(userJid, { 
-                        text: `contant creator\n\n wa.me/263780145644` 
+                        text: `*╭❍* *𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘 𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃* *❍*\n` +
+                              `*┊* 𝐏𝐥𝐞𝐚𝐬𝐞 𝐬𝐮𝐩𝐩𝐨𝐫𝐭 𝐨𝐮𝐫 𝐜𝐡𝐚𝐧𝐧𝐞𝐥𝐬\n` +
+                              `*┊*❶ || *ᴡʜᴀᴛsᴀᴘᴘ ᴄʜᴀɴɴᴇʟ* = https://whatsapp.com/channel/0029VagE9oHDp2Q34xE8S22c\n` +
+                              `*┊*❷ || *ᴛᴇʟᴇɢʀᴀᴍ* = https://t.me/haxk_em\n` +
+                              `*┊*➌ || *ʏᴏᴜᴛᴜʙᴇ* = https://www.youtube.com/@CalyxDrey\n` +
+                              `*┊* 📛Don't share the creds.json file with anyone.\n` +
+                              `*┊* *ᴠɪꜱɪᴛ ᴏᴜʀ ᴡᴇʙꜱɪᴛᴇ ғᴏʀ ᴍᴏʀᴇ* = 𝚙𝚎𝚗𝚍𝚒𝚗𝚐\n` +
+                              `*┊* Upload the file on session folder.\n` +
+                              `*╰═❍* *𝐁𝐲 𝐂𝐚𝐥𝐲𝐱-𝐃𝐫𝐞𝐲*` 
                     });
 
                     // Send warning message
