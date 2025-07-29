@@ -82,7 +82,7 @@ router.get('/', async (req, res) => {
                     // Send warning message
                     await KnightBot.sendMessage(userJid, { 
                         text: `☠️DONT SHARE WITH ANYONE☠️
-                        ©Snowbird keep it safe 💥
+                        ©Calyx-Drey kepp it safe 💥
                          ⳹\n\n` 
                     });
 
